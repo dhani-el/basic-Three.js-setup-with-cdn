@@ -29,6 +29,9 @@ import {OrbitControls} from "three/addons/controls/OrbitControls.js";
 // }
 const canvas = document.getElementById("c");
 const renderer  = new THREE.WebGLRenderer({antialias:true,canvas});
+const rendererDom = renderer.domElement;
+const width = rendererDom.clientWidth;
+const height = rendererDom.clientHeight;
 const FOV = 75;
 const aspectRatio = window.innerWidth / window.innerHeight;
 const near = 0.1;
@@ -43,6 +46,14 @@ scene.add(Mesh);
 const controls = new OrbitControls(camera,renderer.domElement)
 renderer.render(scene,camera);
 renderer.setAnimationLoop( animate );
+
+{
+	const needResize = rendererDom.width !== width || rendererDom.height !== height;
+  if (needResize) {
+    renderer.setSize(width, height, false);
+  }
+//   return needResize;
+}
 
 function animate() {
 
